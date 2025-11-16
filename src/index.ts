@@ -15,7 +15,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4444;
 
 app.get("/", (req, res) => {
   res.send("Welcome to Ketere Vision API");

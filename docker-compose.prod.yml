@@ -1,3 +1,5 @@
+#docker compose -f docker-compose.prod.yml up -d --build
+
 version: "3.8"
 
 services:
@@ -11,10 +13,10 @@ services:
     restart: always
     environment:
       - NODE_ENV=production
-      - PORT=4000
+      - PORT=4444
       - DATABASE_URL=${DATABASE_URL}   # fournie via .env
     ports:
-      - "4000:4000"
+      - "4444:4444"
     env_file:
       - .env.production
     healthcheck:
