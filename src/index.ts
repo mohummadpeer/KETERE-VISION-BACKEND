@@ -9,11 +9,28 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-app.use(cors({
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+// ✅ CORS pour ton front
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://ketere-vision.vercel.app",   // ton front en production
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Autoriser requêtes sans origin (Postman, mobile…)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 const PORT = process.env.PORT || 4444;
 
